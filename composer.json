@@ -1,0 +1,45 @@
+{
+  "name": "morebec/object-generator",
+  "description": "The Object Generator component allows one to generate PHP Objects from YAML definitions.",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "jwillp",
+      "email": "jwilliam.perreault@morebec.com"
+    }
+  ],
+  "repositories": [
+    {
+      "url": "https://github.com/Morebec/ValueObjects.git",
+      "type": "git"
+    }
+  ],
+  "config": {
+    "preferred-install": {
+      "*": "dist"
+    },
+    "sort-packages": true
+  },
+  "autoload": {
+    "psr-4": {
+      "Morebec\\ObjectGenerator\\": "src/"
+    }
+  },
+  "require": {
+    "morebec/value-objects": "^1.0",
+    "nette/php-generator": "^3.3",
+    "symfony/config": "^5.0",
+    "symfony/console": "^5.0",
+    "symfony/filesystem": "^5.0",
+    "symfony/property-access": "^5.0",
+    "symfony/yaml": "^5.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^8"
+  },
+
+  "scripts": {
+    "fix-namespaces": "find src/  -iname '*.php' -exec phpactor class:transform {} --transform=fix_namespace_class_name \\; | grep .php"
+  }
+}

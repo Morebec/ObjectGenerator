@@ -1,0 +1,20 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__ . '/../vendor/autoload.php';
+
+use Morebec\ObjectGenerator\Application\Console\ConsoleCommand\CompileFileCommand;
+use Morebec\ObjectGenerator\Application\Console\ConsoleCommand\DumpObjectReferenceCommand;
+use Morebec\ObjectGenerator\Application\Shared\Service\ApplicationService;
+use Symfony\Component\Console\Application;
+
+$appService = new ApplicationService();
+
+$application = new Application();
+
+// Register commands
+$application->add(new CompileFileCommand($appService));
+$application->add(new DumpObjectReferenceCommand($appService));
+
+$application->run();
+
