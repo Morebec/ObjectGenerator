@@ -8,7 +8,7 @@ use Nette\PhpGenerator\ClassType;
 /**
  * Compiler
  */
-class Compiler
+class PHPObjectCompiler
 {
     /**
      * @var CompilerPassInterface[]

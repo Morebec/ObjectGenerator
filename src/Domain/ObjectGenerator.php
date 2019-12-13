@@ -3,11 +3,12 @@
 namespace Morebec\ObjectGenerator\Domain;
 
 
-use Morebec\ObjectGenerator\Domain\Compiler\Compiler;
+use Morebec\ObjectGenerator\Domain\Compiler\PHPObjectCompiler;
 use Morebec\ObjectGenerator\Domain\Definition\ObjectDefinition;
 use Morebec\ObjectGenerator\Domain\Definition\Schema\ObjectDefinitionSchema;
 use Morebec\ObjectGenerator\Domain\Loader\DefinitionLoaderInterface;
 use Morebec\ObjectGenerator\Domain\ObjectReferenceDumper\ObjectReferenceDumperInterface;
+use Morebec\ObjectGenerator\Domain\Validation\ObjectSchemaValidator;
 use Morebec\ValueObjects\File\File;
 use Symfony\Component\Config\Definition\Processor;
 
@@ -33,6 +34,11 @@ class ObjectGenerator
         $this->dumper = $dumper;
     }
 
+    /**
+     * @param File $file
+     * @return ObjectGenerationResult
+     * @throws Exception\FileNotFoundException
+     */
     public function generateFile(File $file): ObjectGenerationResult
     {
         // Load definition data schema
@@ -42,22 +48,21 @@ class ObjectGenerator
         $result->setInitialSchema($data);
         return $result;
     }
-    
+
+    /**
+     * @param array $schema
+     * @return ObjectGenerationResult
+     */
     public function generateFromArraySchema(array $schema): ObjectGenerationResult
     {
-        $typeName = array_key_first($schema);
-        $objectSchema = new ObjectDefinitionSchema($typeName);
+        $objectName = array_key_first($schema);
 
-        // Validate schema against schema validator
-        $processor = new Processor();
-        $validatedArraySchema = $processor->processConfiguration(
-            $objectSchema,
-            $schema
-        );
+        $validator = new ObjectSchemaValidator();
+        $validatedArraySchema = $validator->validate($objectName, $schema);
 
         // Create definition object
         $definition = ObjectDefinition::createFromArray(
-            $typeName,
+            $objectName,
             $validatedArraySchema
         );
         
@@ -65,11 +70,15 @@ class ObjectGenerator
         $result->setValidatedSchema($schema);
         return $result;
     }
-    
+
+    /**
+     * @param ObjectDefinition $definition
+     * @return ObjectGenerationResult
+     */
     public function generateFromObjectDefinition(ObjectDefinition $definition): ObjectGenerationResult
     {
         // Compile Schema into class representation
-        $compiler = new Compiler();
+        $compiler = new PHPObjectCompiler();
         $object = $compiler->compile($definition);
 
         // Generate code

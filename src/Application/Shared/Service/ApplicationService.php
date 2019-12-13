@@ -4,6 +4,7 @@
 namespace Morebec\ObjectGenerator\Application\Shared\Service;
 
 use Morebec\ObjectGenerator\Domain\Definition\ObjectDefinition;
+use Morebec\ObjectGenerator\Domain\Exception\FileNotFoundException;
 use Morebec\ObjectGenerator\Domain\ObjectDumper;
 use Morebec\ObjectGenerator\Domain\ObjectGenerationResult;
 use Morebec\ObjectGenerator\Domain\ObjectGenerator;
@@ -20,6 +21,7 @@ class ApplicationService
      * Compiles a file and returns an ObjectGenerationResult
      * @param string $pathToFile
      * @return ObjectGenerationResult
+     * @throws FileNotFoundException
      */
     public function compileFile(string $pathToFile): ObjectGenerationResult
     {

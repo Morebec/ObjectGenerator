@@ -2,7 +2,7 @@
 
 namespace Morebec\Devtools\ObjectGenerator\Definition;
 
-use Morebec\Devtools\ObjectGenerator\Domain\Definition\VariableType;
+use Morebec\ObjectGenerator\Domain\Definition\VariableType;
 use PHPUnit\Framework\TestCase;
 
 /**
