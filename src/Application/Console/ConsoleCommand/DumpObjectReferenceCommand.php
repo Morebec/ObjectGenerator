@@ -37,7 +37,14 @@ class DumpObjectReferenceCommand extends AbstractCommand
 
         $io->writeln('Dumping reference ...');
         $outFile = $input->getOption('out-file');
+
+        if(!$outFile) {
+            $io->error('Please specify a value for the out file option');
+            return self::STATUS_ERROR;
+        }
+
         file_put_contents($outFile, $ref);
+
         $io->writeln("<info>Reference dumped successfully to '{$outFile}'</info>");
 
         return parent::STATUS_SUCCESS;
