@@ -30,6 +30,13 @@ class UseKeywordDefinitionSchema extends AbstractDefinitionSchema
                 })
             ->end()
             ->arrayPrototype()
+                ->beforeNormalization()
+                    ->ifTrue(static function($v) {
+                        return !is_array($v);
+                    })
+                ->then(static function($v){
+                    return [SchemaKey::CLASS_NAME => $v, SchemaKey::AS => null];
+                })->end()
                 ->children()
                     ->scalarNode(SchemaKey::CLASS_NAME)->end()
                     ->scalarNode(SchemaKey::AS)->defaultNull()->end()
