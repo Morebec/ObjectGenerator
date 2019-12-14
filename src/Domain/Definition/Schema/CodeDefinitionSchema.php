@@ -15,7 +15,7 @@ class CodeDefinitionSchema extends AbstractDefinitionSchema
         $node = $treeBuilder->getRootNode();
         $node
                 ->info('You can specify some PHP code to be injected here.')
-                ->defaultValue(null)
+                ->defaultNull()
         ->end()
         ;
         
