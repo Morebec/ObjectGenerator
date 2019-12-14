@@ -175,14 +175,14 @@ class VariableType
     {
         return explode('|', $this->rawType);
     }
-    
+
     /**
      * Creates a type instance from a raw string
      * of the form  'bool|string|float|Custom|null'
      * @param string $t
-     * @return \static
+     * @return VariableType
      */
-    public static function fromString(string $t)
+    public static function fromString(string $t): self
     {
         return new static($t);
     }
