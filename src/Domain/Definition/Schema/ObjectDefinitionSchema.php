@@ -28,7 +28,7 @@ class ObjectDefinitionSchema implements ConfigurationInterface
         $root
             ->addDefaultsIfNotSet()
             ->children()
-                ->scalarNode('namespace')->defaultValue(null)->end()
+                ->scalarNode('namespace')->defaultNull()->end()
                 ->append(FinalKeywordDefinitionSchema::create())
                 ->append(AbstractKeywordDefinitionSchema::create())
                 ->enumNode(SchemaKey::TYPE)
@@ -38,7 +38,7 @@ class ObjectDefinitionSchema implements ConfigurationInterface
                 ->scalarNode(SchemaKey::DESCRIPTION)
                     ->defaultValue('')
                 ->end()
-                ->scalarNode(SchemaKey::EXTENDS)->defaultValue(null)->end()
+                ->scalarNode(SchemaKey::EXTENDS)->defaultNull()->end()
                 ->arrayNode(SchemaKey::IMPLEMENTS)
                     ->beforeNormalization()->castToArray()->end()
                     ->scalarPrototype()->end()
@@ -50,10 +50,7 @@ class ObjectDefinitionSchema implements ConfigurationInterface
                 ->append(AnnotationsDefinitionSchema::create())
                 ->append(PropertiesDefinitionSchema::create())
                 ->append(MethodsDefinitionSchema::create())
-                ->arrayNode(SchemaKey::USE)
-                    ->beforeNormalization()->castToArray()->end()
-                    ->scalarPrototype()->end()
-                ->end()
+                ->append(UseKeywordDefinitionSchema::create())
             ->end()
         ;
 
