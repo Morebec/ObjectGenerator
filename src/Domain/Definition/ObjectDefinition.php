@@ -3,6 +3,7 @@
 namespace Morebec\ObjectGenerator\Domain\Definition;
 
 use Morebec\ObjectGenerator\Domain\Definition\Schema\SchemaKey;
+use mysql_xdevapi\Schema;
 
 class ObjectDefinition
 {
@@ -231,7 +232,7 @@ class ObjectDefinition
         $this->use = $use;
     }
     
-    public function addUse(string $use): void
+    public function addUse(UseDefinition $use): void
     {
         $this->use[] = $use;
     }
@@ -271,10 +272,16 @@ class ObjectDefinition
         $definition->setImplements($data[SchemaKey::IMPLEMENTS]);
         $definition->setTraits($data[SchemaKey::TRAITS]);
         $definition->setAnnotations($data[SchemaKey::ANNOTATIONS]);
-        $definition->setUse($data[SchemaKey::USE]);
         $definition->setAbstract($data[SchemaKey::ABSTRACT]);
         $definition->setFinal($data[SchemaKey::FINAL]);
         $definition->setType($data[SchemaKey::TYPE]);
+
+        // Use
+        foreach ($data[SchemaKey::USE] as $use) {
+            $definition->addUse(
+                new UseDefinition($use[SchemaKey::CLASS_NAME], $use[SchemaKey::AS])
+            );
+        }
 
         // Properties
         foreach ($data[SchemaKey::PROPERTIES] as $propertyName => $property) {

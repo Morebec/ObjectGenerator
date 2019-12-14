@@ -37,7 +37,7 @@ If you prefer not generating a getter, simply ommit this parameter.')
                             ->scalarNode(SchemaKey::NAME)
                                 ->info('You can specify the name of your setter, here.
 If nothing is specified as a name, it will default to getPropertyName.')
-                                ->defaultValue(null)->end()
+                                ->defaultNull()->end()
                             ->scalarNode(SchemaKey::DESCRIPTION)->defaultValue('')->end()
                             ->append(VisibilityKeywordDefinitionSchema::create())
                             ->append(CodeDefinitionSchema::create())

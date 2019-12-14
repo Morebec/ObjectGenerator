@@ -55,4 +55,8 @@ class SchemaKey
     public const CONSTANT = 'constant';
     
     public const NAME = 'name';
+
+    const CLASS_NAME = 'classname';
+
+    const AS = 'as';
 }

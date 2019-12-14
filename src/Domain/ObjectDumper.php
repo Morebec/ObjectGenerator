@@ -3,6 +3,7 @@
 namespace Morebec\ObjectGenerator\Domain;
 
 use Morebec\ObjectGenerator\Domain\Definition\ObjectDefinition;
+use Morebec\ObjectGenerator\Domain\Definition\UseDefinition;
 use Nette\PhpGenerator\ClassType;
 
 /**
@@ -22,8 +23,8 @@ class ObjectDumper
         if ($namespace) {
             $namespace = "namespace $namespace;" . PHP_EOL . PHP_EOL;
         }
-        
-        $use = join(PHP_EOL, array_map(static function ($n) {
+
+        $use = join(PHP_EOL, array_map(static function (UseDefinition $n) {
             return "use $n;";
         }, $definition->getUse()));
         if ($use) {
